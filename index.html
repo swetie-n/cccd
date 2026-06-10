@@ -73,37 +73,82 @@
             z-index: 10;
         }
 
-        /* Hiệu ứng ngôi sao tỏa ra liên tục - Đã chỉnh MÀU ĐỎ và TỎA ÍT */
-        .star-effect-container {
-            position: absolute;
-            top: 22.5%; 
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 150px;
-            height: 150px;
-            pointer-events: none;
-            z-index: 5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        /* ===== MÀN HÌNH 2 (CÓ THỂ CUỘN) ===== */
+        #screen2 {
+            overflow-y: auto; 
+            background-color: #f4f6f8;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch; 
         }
 
-        .star-center {
-            width: 24px;
-            height: 24px;
-            background: #e62117;
-            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-            position: absolute;
-            animation: blinkStar 2s infinite ease-in-out; /* Nhịp chớp chậm lại xíu */
+        #screen2::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
         }
 
-        .star-wave {
+        .scroll-wrapper {
+            width: 100%;
+            position: relative;
+        }
+
+        .img-scroll {
+            width: 100%;
+            height: auto; 
+            display: block;
+        }
+
+        /* Vùng bấm tàng hình nút quay lại */
+        .click-area-back {
             position: absolute;
-            border: 1.5px solid rgba(230, 33, 23, 0.6); /* Đổi sang viền màu đỏ */
-            border-radius: 50%;
-            width: 10px;
-            height: 10px;
-            opacity: 0;
+            top: 1.5%;
+            left: 2%;
+            width: 12%;
+            height: 4%;
+            background: rgba(0, 0, 255, 0); 
+            cursor: pointer;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-viewport">
+        
+        <div id="screen1" class="screen active">
+            <img src="1000054051.png" alt="Ảnh gốc 1" class="img-full">
+            <div class="click-area-ccdt" id="btnGo"></div>
+        </div>
+
+        <div id="screen2" class="screen">
+            <div class="scroll-wrapper">
+                <div class="click-area-back" id="btnBack"></div>
+                <img src="1000054052.png" alt="Ảnh gốc 2" class="img-scroll">
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const s1 = document.getElementById('screen1');
+        const s2 = document.getElementById('screen2');
+        const btnGo = document.getElementById('btnGo');
+        const btnBack = document.getElementById('btnBack');
+
+        // Chuyển sang màn hình 2
+        btnGo.addEventListener('click', () => {
+            s1.classList.remove('active');
+            s2.classList.add('active');
+            s2.scrollTop = 0; 
+        });
+
+        // Quay lại màn hình 1
+        btnBack.addEventListener('click', () => {
+            s2.classList.remove('active');
+            s1.classList.add('active');
+        });
+    </script>
+</body>
+</html>
             animation: waveOut 2.5s infinite linear;
         }
 
