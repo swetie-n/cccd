@@ -1,1 +1,213 @@
 
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Giao diện Căn cước</title>
+    <style>
+        /* Reset cơ bản cho di động */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Khung chứa giả lập tỷ lệ 1080x2165 */
+        .phone-viewport {
+            width: 100vw;
+            height: 100vh;
+            max-width: 500px; /* Giới hạn khi xem trên máy tính, trên điện thoại sẽ full */
+            max-height: 100vh;
+            position: relative;
+            background-color: #fff;
+            overflow: hidden;
+        }
+
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        /* ===== MÀN HÌNH 1 ===== */
+        #screen1 {
+            background-color: #f7f9fa;
+        }
+
+        .img-full {
+            width: 100%;
+            height: 100%;
+            object-fit: fill; /* Khớp khít theo tỷ lệ 1080x2165 của ảnh */
+            display: block;
+        }
+
+        /* Vùng bấm tàng hình đè lên nút "Căn cước điện tử" ở ảnh 1 */
+        .click-area-ccdt {
+            position: absolute;
+            top: 53.5%; /* Tọa độ ước tính vị trí nút trên màn hình */
+            left: 4%;
+            width: 92%;
+            height: 6%;
+            background: rgba(255, 0, 0, 0); /* Để 0 để ẩn đi */
+            border-radius: 8px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        /* Hiệu ứng ngôi sao tỏa ra liên tục */
+        .star-effect-container {
+            position: absolute;
+            top: 22.5%; /* Tọa độ tâm ngôi sao đỏ trên thẻ của ảnh 1 */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            pointer-events: none;
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .star-center {
+            width: 24px;
+            height: 24px;
+            background: #e62117;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            position: absolute;
+            animation: blinkStar 1.5s infinite ease-in-out;
+        }
+
+        .star-wave {
+            position: absolute;
+            border: 1.5px solid rgba(255, 204, 0, 0.7);
+            border-radius: 50%;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+            animation: waveOut 3s infinite linear;
+        }
+
+        .star-wave:nth-child(2) { animation-delay: 0.75s; }
+        .star-wave:nth-child(3) { animation-delay: 1.5s; }
+        .star-wave:nth-child(4) { animation-delay: 2.25s; }
+
+        @keyframes blinkStar {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px #ffcc00); }
+            50% { transform: scale(1.15); filter: drop-shadow(0 0 8px #ff3300); }
+        }
+
+        @keyframes waveOut {
+            0% { width: 15px; height: 15px; opacity: 0; }
+            10% { opacity: 0.8; }
+            80% { opacity: 0.3; }
+            100% { width: 240px; height: 240px; opacity: 0; }
+        }
+
+        /* ===== MÀN HÌNH 2 (CÓ THỂ CUỘN) ===== */
+        #screen2 {
+            overflow-y: auto; /* Cho phép cuộn dọc */
+            background-color: #f4f6f8;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch; /* Cuộn mượt trên iOS */
+        }
+
+        /* Ẩn thanh cuộn để nhìn cho giống app thật */
+        #screen2::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+
+        .scroll-wrapper {
+            width: 100%;
+            position: relative;
+        }
+
+        .img-scroll {
+            width: 100%;
+            height: auto; /* Để ảnh tự kéo dài và cuộn ít theo màn hình thực tế */
+            display: block;
+        }
+
+        /* Vùng bấm tàng hình nút quay lại (mũi tên góc trên bên trái) */
+        .click-area-back {
+            position: absolute;
+            top: 1.5%;
+            left: 2%;
+            width: 12%;
+            height: 4%;
+            background: rgba(0, 0, 255, 0); /* Để 0 để ẩn đi */
+            cursor: pointer;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-viewport">
+        
+        <div id="screen1" class="screen active">
+            <img src="1000054051.png" alt="Ảnh gốc 1" class="img-full">
+            
+            <div class="star-effect-container">
+                <div class="star-center"></div>
+                <div class="star-wave"></div>
+                <div class="star-wave"></div>
+                <div class="star-wave"></div>
+                <div class="star-wave"></div>
+            </div>
+
+            <div class="click-area-ccdt" id="btnGo"></div>
+        </div>
+
+        <div id="screen2" class="screen">
+            <div class="scroll-wrapper">
+                <div class="click-area-back" id="btnBack"></div>
+                
+                <img src="1000054052.png" alt="Ảnh gốc 2" class="img-scroll">
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const s1 = document.getElementById('screen1');
+        const s2 = document.getElementById('screen2');
+        const btnGo = document.getElementById('btnGo');
+        const btnBack = document.getElementById('btnBack');
+
+        // Nhấn nút chuyển sang màn hình 2 và tự động lên đầu trang
+        btnGo.addEventListener('click', () => {
+            s1.classList.remove('active');
+            s2.classList.add('active');
+            s2.scrollTop = 0; 
+        });
+
+        // Nhấn nút quay lại màn hình 1
+        btnBack.addEventListener('click', () => {
+            s2.classList.remove('active');
+            s1.classList.add('active');
+        });
+    </script>
+</body>
+</html>
