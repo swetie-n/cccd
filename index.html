@@ -67,151 +67,46 @@
             left: 4%;
             width: 92%;
             height: 6%;
-            background: rgba(255, 0, 0, 0); /* Nút tàng hình */
+            background: rgba(255, 0, 0, 0); 
             border-radius: 8px;
             cursor: pointer;
             z-index: 10;
         }
 
-        /* ===== MÀN HÌNH 2 (CÓ THỂ CUỘN) ===== */
-        #screen2 {
-            overflow-y: auto; 
-            background-color: #f4f6f8;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch; 
-        }
-
-        #screen2::-webkit-scrollbar {
-            width: 0px;
-            background: transparent;
-        }
-
-        .scroll-wrapper {
-            width: 100%;
-            position: relative;
-        }
-
-        .img-scroll {
-            width: 100%;
-            height: auto; 
-            display: block;
-        }
-
-        /* Vùng bấm tàng hình nút quay lại */
-        .click-area-back {
+        /* Hiệu ứng tỏa ra liên tục (Đã xóa ngôi sao ở giữa) */
+        .star-effect-container {
             position: absolute;
-            top: 1.5%;
-            left: 2%;
-            width: 12%;
-            height: 4%;
-            background: rgba(0, 0, 255, 0); /* Nút tàng hình */
-            cursor: pointer;
-            z-index: 10;
+            top: 22.5%; 
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150px;
+            height: 150px;
+            pointer-events: none;
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-    </style>
-</head>
-<body>
 
-    <div class="phone-viewport">
-        
-        <div id="screen1" class="screen active">
-            <img src="1000054051.png" alt="Ảnh gốc 1" class="img-full">
-            
-            <div class="click-area-ccdt" id="btnGo"></div>
-        </div>
-
-        <div id="screen2" class="screen">
-            <div class="scroll-wrapper">
-                <div class="click-area-back" id="btnBack"></div>
-                
-                <img src="1000054052.png" alt="Ảnh gốc 2" class="img-scroll">
-            </div>
-        </div>
-
-    </div>
-
-    <script>
-        const s1 = document.getElementById('screen1');
-        const s2 = document.getElementById('screen2');
-        const btnGo = document.getElementById('btnGo');
-        const btnBack = document.getElementById('btnBack');
-
-        // Khi bấm vào "Căn cước điện tử" ở màn 1
-        btnGo.addEventListener('click', () => {
-            s1.classList.remove('active');
-            s2.classList.add('active');
-            s2.scrollTop = 0; // Tự động cuộn lên đầu trang
-        });
-
-        // Khi bấm mũi tên quay lại ở màn 2
-        btnBack.addEventListener('click', () => {
-            s2.classList.remove('active');
-            s1.classList.add('active');
-        });
-    </script>
-</body>
-</html>
-            background: rgba(0, 0, 255, 0); 
-            cursor: pointer;
-            z-index: 10;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="phone-viewport">
-        
-        <div id="screen1" class="screen active">
-            <img src="1000054051.png" alt="Ảnh gốc 1" class="img-full">
-            <div class="click-area-ccdt" id="btnGo"></div>
-        </div>
-
-        <div id="screen2" class="screen">
-            <div class="scroll-wrapper">
-                <div class="click-area-back" id="btnBack"></div>
-                <img src="1000054052.png" alt="Ảnh gốc 2" class="img-scroll">
-            </div>
-        </div>
-
-    </div>
-
-    <script>
-        const s1 = document.getElementById('screen1');
-        const s2 = document.getElementById('screen2');
-        const btnGo = document.getElementById('btnGo');
-        const btnBack = document.getElementById('btnBack');
-
-        // Chuyển sang màn hình 2
-        btnGo.addEventListener('click', () => {
-            s1.classList.remove('active');
-            s2.classList.add('active');
-            s2.scrollTop = 0; 
-        });
-
-        // Quay lại màn hình 1
-        btnBack.addEventListener('click', () => {
-            s2.classList.remove('active');
-            s1.classList.add('active');
-        });
-    </script>
-</body>
-</html>
+        .star-wave {
+            position: absolute;
+            border: 1.5px solid rgba(230, 33, 23, 0.6); 
+            border-radius: 50%;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
             animation: waveOut 2.5s infinite linear;
         }
 
-        /* Rút xuống còn 2 sóng cho nó nhẹ nhàng, tỏa ít */
+        /* Chỉnh lại độ trễ cho các sóng do đã xóa phần tử đầu tiên */
+        .star-wave:nth-child(1) { animation-delay: 0s; }
         .star-wave:nth-child(2) { animation-delay: 1.25s; }
-
-        @keyframes blinkStar {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px #ff3300); }
-            50% { transform: scale(1.1); filter: drop-shadow(0 0 5px #e62117); }
-        }
 
         @keyframes waveOut {
             0% { width: 20px; height: 20px; opacity: 0; }
             10% { opacity: 0.6; }
             60% { opacity: 0.1; }
-            100% { width: 120px; height: 120px; opacity: 0; } /* Vòng tỏa nhỏ lại (120px thay vì 240px) */
+            100% { width: 120px; height: 120px; opacity: 0; } 
         }
 
         /* ===== MÀN HÌNH 2 (CÓ THỂ CUỘN) ===== */
@@ -259,7 +154,6 @@
             <img src="1000054051.png" alt="Ảnh gốc 1" class="img-full">
             
             <div class="star-effect-container">
-                <div class="star-center"></div>
                 <div class="star-wave"></div>
                 <div class="star-wave"></div>
             </div>
