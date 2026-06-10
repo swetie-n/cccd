@@ -67,7 +67,7 @@
             left: 4%;
             width: 92%;
             height: 6%;
-            background: rgba(255, 0, 0, 0); 
+            background: rgba(255, 0, 0, 0); /* Nút tàng hình */
             border-radius: 8px;
             cursor: pointer;
             z-index: 10;
@@ -104,6 +104,53 @@
             left: 2%;
             width: 12%;
             height: 4%;
+            background: rgba(0, 0, 255, 0); /* Nút tàng hình */
+            cursor: pointer;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-viewport">
+        
+        <div id="screen1" class="screen active">
+            <img src="1000054051.png" alt="Ảnh gốc 1" class="img-full">
+            
+            <div class="click-area-ccdt" id="btnGo"></div>
+        </div>
+
+        <div id="screen2" class="screen">
+            <div class="scroll-wrapper">
+                <div class="click-area-back" id="btnBack"></div>
+                
+                <img src="1000054052.png" alt="Ảnh gốc 2" class="img-scroll">
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const s1 = document.getElementById('screen1');
+        const s2 = document.getElementById('screen2');
+        const btnGo = document.getElementById('btnGo');
+        const btnBack = document.getElementById('btnBack');
+
+        // Khi bấm vào "Căn cước điện tử" ở màn 1
+        btnGo.addEventListener('click', () => {
+            s1.classList.remove('active');
+            s2.classList.add('active');
+            s2.scrollTop = 0; // Tự động cuộn lên đầu trang
+        });
+
+        // Khi bấm mũi tên quay lại ở màn 2
+        btnBack.addEventListener('click', () => {
+            s2.classList.remove('active');
+            s1.classList.add('active');
+        });
+    </script>
+</body>
+</html>
             background: rgba(0, 0, 255, 0); 
             cursor: pointer;
             z-index: 10;
